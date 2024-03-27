@@ -2,6 +2,7 @@ package uqac.dim.travelmanager;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,14 +21,18 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
-import org.osmdroid.views.MapView;
 import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 public class MapFragment extends Fragment {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private MapView mapView;
     private FusedLocationProviderClient fusedLocationClient;
+    private MyLocationNewOverlay myLocationOverlay;
 
     @Nullable
     @Override
@@ -37,8 +42,10 @@ public class MapFragment extends Fragment {
         mapView = rootView.findViewById(R.id.mapView);
         mapView.setTileSource(TileSourceFactory.MAPNIK);
         mapView.setMinZoomLevel(1.0); // Example minimum zoom level
-        mapView.setMaxZoomLevel(22.0); // Example maximum zoom level
+        mapView.setMaxZoomLevel(20.0); // Example maximum zoom level
         mapView.setMultiTouchControls(true);
+
+        Configuration.getInstance().setUserAgentValue(BuildConfig.APPLICATION_ID);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
 
@@ -47,7 +54,7 @@ public class MapFragment extends Fragment {
                 != PackageManager.PERMISSION_GRANTED) {
             requestLocationPermission();
         } else {
-            getUserLocation();
+            setupMap();
         }
 
         return rootView;
@@ -59,8 +66,16 @@ public class MapFragment extends Fragment {
                 LOCATION_PERMISSION_REQUEST_CODE);
     }
 
-    private void getUserLocation() {
-        // Check if location is enabled
+    private void setupMap() {
+        // Initialize the map
+        mapView.getController().setZoom(15); // Initial zoom level
+
+        // Add user location overlay
+        myLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(requireContext()), mapView);
+        mapView.getOverlays().add(myLocationOverlay);
+        myLocationOverlay.enableMyLocation();
+
+        // Get and show user location
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(requireActivity(), new OnSuccessListener<Location>() {
                     @Override
@@ -69,9 +84,17 @@ public class MapFragment extends Fragment {
                             // Move the map to the user's location
                             mapView.getController().setZoom(19.0);
                             mapView.getController().setCenter(new GeoPoint(location.getLatitude(), location.getLongitude()));
+                            addStartMarker(new GeoPoint(location.getLatitude(), location.getLongitude()));
                         }
                     }
                 });
+    }
+
+    private void addStartMarker(GeoPoint startPoint) {
+        Marker startMarker = new Marker(mapView);
+        startMarker.setPosition(startPoint);
+        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        mapView.getOverlays().add(startMarker);
     }
 
     @Override
@@ -79,10 +102,28 @@ public class MapFragment extends Fragment {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getUserLocation();
+                setupMap();
             } else {
                 // Handle permission denied
             }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView.onDetach();
     }
 }
