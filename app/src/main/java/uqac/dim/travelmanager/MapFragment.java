@@ -94,6 +94,7 @@ public class MapFragment extends Fragment {
         Marker startMarker = new Marker(mapView);
         startMarker.setPosition(startPoint);
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        startMarker.setTitle("Votre position");
         mapView.getOverlays().add(startMarker);
     }
 
