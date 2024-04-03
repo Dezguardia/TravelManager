@@ -1,8 +1,11 @@
 package uqac.dim.travelmanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -23,6 +26,15 @@ public class MainActivity extends AppCompatActivity {
 
             loadMapFragment();
         }
+
+        ImageButton imageButtonCreerVoyage = findViewById(R.id.btn_plus);
+        imageButtonCreerVoyage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CreerVoyageActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void loadMapFragment() {

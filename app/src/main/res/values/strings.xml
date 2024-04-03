@@ -3,4 +3,24 @@
     <string name="search_title">Rechercher une destination</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="navigateButton">Aller vers la destination</string>
+    <string name="title_activity_creer_voyage">CreerVoyageActivity</string>
+    <string name="creer_voyage">Créer un Nouveau Voyage</string>
+    <string name="image">Image de couverture du voyage</string>
+    <string name="nom_voyage">Nom du Voyage</string>
+    <string name="date_depart">Date du départ</string>
+    <string name="date_fin">Date de fin</string>
+    <string name="suivant">Suivant</string>
+    <string name="annuler">Annuler</string>
+    <string name="creer_plan_voyage">Créer le Plan Détaillé du Voyage</string>
+    <string name="jour">Jour 1</string>
+    <string name="jour1">date</string>
+    <string name="lieu_depart">Lieu de départ de la journée</string>
+    <string name="lieu">Ajouter un nouveau lieu</string>
+    <string name="mode_de_transport">Cliquer ici pour ajouter un mode de transport</string>
+    <string-array name="modes_transport">
+        <item>Voiture</item>
+        <item>Vélo</item>
+        <item>Marche</item>
+        <item>Train</item>
+    </string-array>
 </resources>
