@@ -9,6 +9,9 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+        flatDir {
+            dirs("libs")
+        }
     }
 }
 dependencyResolutionManagement {
@@ -21,3 +24,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "TravelManager"
 include(":app")
+include(":app:libs")
