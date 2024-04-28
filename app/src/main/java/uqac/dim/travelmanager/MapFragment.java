@@ -127,4 +127,16 @@ public class MapFragment extends Fragment {
         super.onDestroy();
         mapView.onDetach();
     }
+    public void centerOnLocation(double latitude, double longitude) {
+        if (mapView != null) {
+            mapView.getController().setCenter(new GeoPoint(latitude, longitude));
+        }
+    }
+    public void addMarker(double latitude, double longitude, String title) {
+        Marker marker = new Marker(mapView);
+        marker.setPosition(new GeoPoint(latitude, longitude));
+        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        marker.setTitle(title);
+        mapView.getOverlays().add(marker);
+    }
 }

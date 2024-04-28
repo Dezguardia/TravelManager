@@ -41,6 +41,7 @@
         android:layout_marginStart="216dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="110dp"
+        android:onClick="goToLocation"
         android:text="@string/navigateButton" />
     <RelativeLayout
         android:id="@+id/bottom_navigation"
