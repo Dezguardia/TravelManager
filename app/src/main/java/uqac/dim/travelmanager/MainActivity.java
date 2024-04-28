@@ -10,12 +10,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
 import androidx.appcompat.widget.SearchView;
+import android.view.View;
+import android.widget.ImageButton;
+import uqac.dim.travelmanager.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -47,13 +50,39 @@ public class MainActivity extends AppCompatActivity {
             loadMapFragment();
         }
 
-        ImageButton imageButtonCreerVoyage = findViewById(R.id.btn_plus);
-        imageButtonCreerVoyage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        // Initialisation de BottomNavigationView
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        // Ajoutez un écouteur de navigation pour gérer les sélections de menu
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+
+            // Utilisez une déclaration if-else if-else pour gérer les sélections de menu
+            if (itemId == R.id.navigation_home) {
+                // Appellez votre méthode pour charger le fragment de carte
+                loadMapFragment();
+                return true;
+            } else if (itemId == R.id.navigation_travel) {
+                Intent intentTravel = new Intent(MainActivity.this, TravelActivity.class);
+                startActivity(intentTravel);
+                return true;
+            } else if (itemId == R.id.navigation_add) {
+                // Redirige le bouton "Ajouter" vers l'activité CreerVoyageActivity
                 Intent intent = new Intent(MainActivity.this, CreerVoyageActivity.class);
                 startActivity(intent);
+                return true;
+            } else if (itemId == R.id.navigation_favorites) {
+                //Intent intentFavorites = new Intent(MainActivity.this, FavoritesActivity.class);
+                //startActivity(intentFavorites);
+                return true;
+            } else if (itemId == R.id.navigation_options) {
+                //Intent intentOptions = new Intent(MainActivity.this, OptionsActivity.class);
+                //startActivity(intentOptions);
+                return true;
             }
+
+            // Si aucun des éléments ne correspond, renvoyez false
+            return false;
         });
         // Récupération de la SearchView depuis le layout XML
         searchView = findViewById(R.id.search_view);
@@ -74,14 +103,26 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+        // Vous avez déjà une écoute d'événement pour le bouton "Ajouter"
+        // Vous pouvez le laisser tel quel ou supprimer le code ci-dessous
+        // si vous utilisez `setOnItemSelectedListener` pour gérer le bouton "Ajouter"
+        // dans le menu de navigation.
+
+        // ImageButton imageButtonCreerVoyage = findViewById(R.id.btn_plus);
+        // imageButtonCreerVoyage.setOnClickListener(v -> {
+        //     Intent intent = new Intent(MainActivity.this, CreerVoyageActivity.class);
+        //     startActivity(intent);
+        // });
+
+
+    // Méthode pour charger le fragment de carte
     private void loadMapFragment() {
         mapFragment = new MapFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, mapFragment);
         transaction.commit();
     }
-
-
 
     private class FindLocationTask extends AsyncTask<String, Void, List<Address>> {
 
@@ -164,4 +205,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 }
