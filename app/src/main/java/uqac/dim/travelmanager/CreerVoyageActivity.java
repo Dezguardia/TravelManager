@@ -154,19 +154,19 @@ public class CreerVoyageActivity extends AppCompatActivity {
                 loadMapFragment();
                 return true;
             } else if (itemId == R.id.navigation_travel) {
-                // Gérez l'élément Voyages (par exemple, remplacer par un fragment de voyages)
-                // loadVoyagesFragment();
+                Intent intentTravel = new Intent(CreerVoyageActivity.this, TravelActivity.class);
+                startActivity(intentTravel);
                 return true;
             } else if (itemId == R.id.navigation_add) {
                 // Redirige le bouton "Ajouter" vers l'activité CreerVoyageActivity
                 return true;
             } else if (itemId == R.id.navigation_favorites) {
-                // Gérez l'élément Enregistrements (par exemple, remplacer par un fragment de favoris)
-                // loadFavoritesFragment();
+                //Intent intentFavorites = new Intent(MainActivity.this, FavoritesActivity.class);
+                //startActivity(intentFavorites);
                 return true;
             } else if (itemId == R.id.navigation_options) {
-                // Gérez l'élément Options (par exemple, remplacer par un fragment d'options)
-                // loadOptionsFragment();
+                //Intent intentOptions = new Intent(MainActivity.this, OptionsActivity.class);
+                //startActivity(intentOptions);
                 return true;
             }
 
