@@ -3,6 +3,7 @@ package uqac.dim.travelmanager;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +17,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import org.osmdroid.bonuspack.location.GeocoderNominatim;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.overlay.Polyline;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private SearchView searchView; // Déclaration de la SearchView
     private static Context context;
     private MapFragment mapFragment;
+    private RoutingManager routingManager = new RoutingManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +81,7 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    public void goToLocation(View view) {
-    }
+
 
     private class FindLocationTask extends AsyncTask<String, Void, List<Address>> {
 
@@ -104,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 if (mapFragment != null) {
                     mapFragment.centerOnLocation(latitude, longitude);
                     mapFragment.addMarker(latitude, longitude, title);
+                    routingManager.addToGeopoints(new GeoPoint(latitude, longitude));
                 }
             }
         }
@@ -111,5 +119,49 @@ public class MainActivity extends AppCompatActivity {
 
     public void findLocation(String query) {
         new FindLocationTask().execute(query);
+    }
+
+    public void goToLocation(View view) {
+        FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        if (location != null) {
+                            GeoPoint startPoint = new GeoPoint(location.getLatitude(), location.getLongitude());
+                            if (!routingManager.getGeopoints().isEmpty()) {
+                                GeoPoint endPoint = routingManager.getGeopoints().get(routingManager.getGeopoints().size()-1);
+                                mapFragment.centerOnLocation(location.getLatitude(), location.getLongitude());
+                                new RouteTask(startPoint, endPoint).execute();
+                            }
+                        }
+                    }
+                });
+    }
+    private class RouteTask extends AsyncTask<Void, Void, Polyline> {
+
+        private final GeoPoint startPoint;
+        private final GeoPoint endPoint;
+        private final Context context;
+
+        public RouteTask(GeoPoint startPoint, GeoPoint endPoint) {
+            this.startPoint = startPoint;
+            this.endPoint = endPoint;
+            this.context = getApplicationContext();
+        }
+
+        @Override
+        protected Polyline doInBackground(Void... voids) {
+            return routingManager.createRoute(startPoint, endPoint, context);
+        }
+
+        @Override
+        protected void onPostExecute(Polyline line) {
+            if (line != null) {
+                mapFragment.addRoute(line);
+            } else {
+                // Handle error or notify user
+            }
+        }
     }
 }
