@@ -107,9 +107,7 @@ public class CreerPlanVoyageActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             int itemId = item.getItemId();
 
-            // Utilisez une déclaration if-else if-else pour gérer les sélections de menu
             if (itemId == R.id.navigation_home) {
-                // Appellez votre méthode pour charger le fragment de carte
                 loadMapFragment();
                 return true;
             } else if (itemId == R.id.navigation_travel) {
@@ -117,28 +115,21 @@ public class CreerPlanVoyageActivity extends AppCompatActivity {
                 startActivity(intentTravel);
                 return true;
             } else if (itemId == R.id.navigation_add) {
-                // Redirige le bouton "Ajouter" vers l'activité CreerVoyageActivity
+                Intent intent = new Intent(CreerPlanVoyageActivity.this, CreerVoyageActivity.class);
+                startActivity(intent);
                 return true;
             } else if (itemId == R.id.navigation_favorites) {
-                //Intent intentFavorites = new Intent(MainActivity.this, FavoritesActivity.class);
-                //startActivity(intentFavorites);
+                Intent intent = new Intent(CreerPlanVoyageActivity.this, EnregistrementsVoyagesActivity.class);
+                startActivity(intent);
                 return true;
             } else if (itemId == R.id.navigation_options) {
-                //Intent intentOptions = new Intent(MainActivity.this, OptionsActivity.class);
-                //startActivity(intentOptions);
+                Intent intentOptions = new Intent(CreerPlanVoyageActivity.this, OptionsActivity.class);
+                startActivity(intentOptions);
                 return true;
             }
 
             // Si aucun des éléments ne correspond, renvoyez false
             return false;
-        });
-        ImageButton imageButtonEnregistrementsVoyage = findViewById(R.id.btn_enregistrements);
-        imageButtonEnregistrementsVoyage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CreerPlanVoyageActivity.this, EnregistrementsVoyagesActivity.class);
-                startActivity(intent);
-            }
         });
 
         btnNouveauJour = findViewById(R.id.nouveau_jour);

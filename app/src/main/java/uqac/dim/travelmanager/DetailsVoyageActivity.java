@@ -15,8 +15,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,41 +108,35 @@ public class DetailsVoyageActivity extends AppCompatActivity {
         }
 
 
-        ImageButton imageButtonAccueil = findViewById(R.id.btn_accueil);
-        imageButtonAccueil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(DetailsVoyageActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
 
-        ImageButton imageButtonCreerVoyage = findViewById(R.id.btn_plus);
-        imageButtonCreerVoyage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            if (itemId == R.id.navigation_home) {
+                loadMapFragment();
+                return true;
+            } else if (itemId == R.id.navigation_travel) {
+                Intent intentTravel = new Intent(DetailsVoyageActivity.this, TravelActivity.class);
+                startActivity(intentTravel);
+                return true;
+            } else if (itemId == R.id.navigation_add) {
                 Intent intent = new Intent(DetailsVoyageActivity.this, CreerVoyageActivity.class);
                 startActivity(intent);
-            }
-        });
-
-        ImageButton imageButtonEnregistrementsVoyage = findViewById(R.id.btn_enregistrements);
-        imageButtonEnregistrementsVoyage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                return true;
+            } else if (itemId == R.id.navigation_favorites) {
                 Intent intent = new Intent(DetailsVoyageActivity.this, EnregistrementsVoyagesActivity.class);
                 startActivity(intent);
+                return true;
+            } else if (itemId == R.id.navigation_options) {
+                Intent intentOptions = new Intent(DetailsVoyageActivity.this, OptionsActivity.class);
+                startActivity(intentOptions);
+                return true;
             }
+
+            // Si aucun des éléments ne correspond, renvoyez false
+            return false;
         });
 
-        ImageButton imageButtonRetour = findViewById(R.id.btn_retour);
-        imageButtonRetour.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(DetailsVoyageActivity.this, EnregistrementsVoyagesActivity.class);
-                startActivity(intent);
-            }
-        });
 
         Button buttonSupprimerVoyage = findViewById(R.id.button_supprimer_voyage);
         buttonSupprimerVoyage.setOnClickListener(new View.OnClickListener() {
@@ -174,6 +171,8 @@ public class DetailsVoyageActivity extends AppCompatActivity {
             }
         });
 
+
+
         Button buttonModifierVoyage = findViewById(R.id.button_modifier_voyage);
         buttonModifierVoyage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,5 +190,15 @@ public class DetailsVoyageActivity extends AppCompatActivity {
                 }
             }
         });
+        
+    }
+    private void loadMapFragment() {
+        MapFragment mapFragment = new MapFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_container, mapFragment);
+
+        transaction.commit();
     }
 }

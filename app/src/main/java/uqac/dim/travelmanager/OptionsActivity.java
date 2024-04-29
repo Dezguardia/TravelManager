@@ -2,17 +2,17 @@ package uqac.dim.travelmanager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
-import uqac.dim.travelmanager.R;
 
-
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentTransaction;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class TravelActivity extends AppCompatActivity {
+public class OptionsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,19 +27,19 @@ public class TravelActivity extends AppCompatActivity {
                 loadMapFragment();
                 return true;
             } else if (itemId == R.id.navigation_travel) {
-                Intent intentTravel = new Intent(TravelActivity.this, TravelActivity.class);
+                Intent intentTravel = new Intent(OptionsActivity.this, TravelActivity.class);
                 startActivity(intentTravel);
                 return true;
             } else if (itemId == R.id.navigation_add) {
-                Intent intent = new Intent(TravelActivity.this, CreerVoyageActivity.class);
+                Intent intent = new Intent(OptionsActivity.this, CreerVoyageActivity.class);
                 startActivity(intent);
                 return true;
             } else if (itemId == R.id.navigation_favorites) {
-                Intent intent = new Intent(TravelActivity.this, EnregistrementsVoyagesActivity.class);
+                Intent intent = new Intent(OptionsActivity.this, EnregistrementsVoyagesActivity.class);
                 startActivity(intent);
                 return true;
             } else if (itemId == R.id.navigation_options) {
-                Intent intentOptions = new Intent(TravelActivity.this, OptionsActivity.class);
+                Intent intentOptions = new Intent(OptionsActivity.this, OptionsActivity.class);
                 startActivity(intentOptions);
                 return true;
             }
