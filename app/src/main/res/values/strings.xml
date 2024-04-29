@@ -15,6 +15,7 @@
     <string name="jour">Jour 1</string>
     <string name="jour1">date</string>
     <string name="lieu_depart">Lieu de départ de la journée</string>
+    <string name="enregistrer">ENREGISTRER</string>
     <string name="lieu">Ajouter un nouveau lieu</string>
     <string name="mode_de_transport">Cliquer ici pour ajouter un mode de transport</string>
     <string-array name="modes_transport">
@@ -22,5 +23,14 @@
         <item>Vélo</item>
         <item>Marche</item>
         <item>Train</item>
+        <item>Car</item>
+        <item>Métro</item>
+        <item>RER</item>
+        <item>Bus</item>
     </string-array>
+    <string name="modifier_voyage">MODIFIER LE VOYAGE</string>
+    <string name="modifier_jour_voyage">MODIFIER LES JOURS DU VOYAGE</string>
+    <string name="supprimer_voyage">SUPPRIMER LE VOYAGE</string>
+    <string name="nouveau_nom_voyage"> ecrit le nouveau nom du voyage</string>
+    <string name="enregistrer_modifications">ENREGISTRER LES MODIFICATIONS</string>
 </resources>

@@ -101,6 +101,15 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        ImageButton imageButtonEnregistrementsVoyage = findViewById(R.id.btn_enregistrements);
+        imageButtonEnregistrementsVoyage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, EnregistrementsVoyagesActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
