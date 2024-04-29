@@ -18,6 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -93,6 +96,37 @@ public class ModifierVoyageActivity extends AppCompatActivity {
 
         // Bouton pour enregistrer les modifications
         Button enregistrerButton = findViewById(R.id.button_enregistrer_modifications);
+
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.navigation_home) {
+                loadMapFragment();
+                return true;
+            } else if (itemId == R.id.navigation_travel) {
+                Intent intentTravel = new Intent(ModifierVoyageActivity.this, TravelActivity.class);
+                startActivity(intentTravel);
+                return true;
+            } else if (itemId == R.id.navigation_add) {
+                Intent intent = new Intent(ModifierVoyageActivity.this, CreerVoyageActivity.class);
+                startActivity(intent);
+                return true;
+            } else if (itemId == R.id.navigation_favorites) {
+                Intent intent = new Intent(ModifierVoyageActivity.this, EnregistrementsVoyagesActivity.class);
+                startActivity(intent);
+                return true;
+            } else if (itemId == R.id.navigation_options) {
+                Intent intentOptions = new Intent(ModifierVoyageActivity.this, OptionsActivity.class);
+                startActivity(intentOptions);
+                return true;
+            }
+
+            // Si aucun des éléments ne correspond, renvoyez false
+            return false;
+        });
+
         enregistrerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,43 +206,6 @@ public class ModifierVoyageActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton imageButtonAccueil = findViewById(R.id.btn_accueil);
-        imageButtonAccueil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ModifierVoyageActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        ImageButton imageButtonCreerVoyage = findViewById(R.id.btn_plus);
-        imageButtonCreerVoyage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ModifierVoyageActivity.this, CreerVoyageActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        ImageButton imageButtonEnregistrementsVoyage = findViewById(R.id.btn_enregistrements);
-        imageButtonEnregistrementsVoyage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ModifierVoyageActivity.this, EnregistrementsVoyagesActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        ImageButton imageButtonRetour = findViewById(R.id.btn_retour);
-        imageButtonRetour.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Intent intent = new Intent(ModifierVoyageActivity.this, EnregistrementsVoyagesActivity.class);
-                //startActivity(intent);
-                finish();
-            }
-        });
-
     }
 
     public void showDateDepart(View v) {
@@ -245,4 +242,14 @@ public class ModifierVoyageActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+
+    private void loadMapFragment() {
+        MapFragment mapFragment = new MapFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_container, mapFragment);
+
+        transaction.commit();
+    }
 }
