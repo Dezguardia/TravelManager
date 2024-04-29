@@ -27,11 +27,14 @@ import androidx.core.view.WindowInsetsCompat;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 import uqac.dim.travelmanager.database.DatabaseHelper;
+import uqac.dim.travelmanager.models.Jour;
 import uqac.dim.travelmanager.models.Voyage;
 
 public class CreerVoyageActivity extends AppCompatActivity {
@@ -109,11 +112,33 @@ public class CreerVoyageActivity extends AppCompatActivity {
 
                 Voyage voyage = new Voyage(nomVoyage, dateDepart, dateFin, imagePath);
                 Log.d("suivant", "Voyage : " + voyage);
-                // Faites ce que vous voulez avec l'objet Voyage (par exemple, enregistrez-le dans une base de données)
+
+                DatabaseHelper databaseHelper = new DatabaseHelper(CreerVoyageActivity.this);
+                /*
+                // Vérifier si l'objet Voyage possède un ID
+                if (voyage.getId() == -1) {
+                    // L'objet Voyage ne possède pas d'ID, donc générer un ID unique
+                    long uniqueId = databaseHelper.generateUniqueVoyageId();
+                    voyage.setId(uniqueId);
+                }
+                 */
+                Log.d("Creer voyage", "id voyage : " + voyage.getId());
+                // Ajouter chaque jour entre la date de départ et la date de fin au voyage
+                for (Date date = depart; !date.after(fin);) {
+                    // Créer un objet Jour pour chaque jour et l'ajouter au voyage
+                    Jour jour = new Jour(sdf.format(date), voyage.getJours().size() + 1);
+                    // Incrementer le numero de jour
+                    voyage.ajouterJour(jour);
+
+                    // Ajouter un jour à la date
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(date);
+                    calendar.add(Calendar.DAY_OF_MONTH, 1);
+                    date = calendar.getTime();
+                }
 
                 // Insérer les données dans la base de données
-                DatabaseHelper databaseHelper = new DatabaseHelper(CreerVoyageActivity.this);
-                long result = databaseHelper.insertVoyage(voyage.getNomVoyage(), voyage.getDateDepart(), voyage.getDateFin());
+                long result = databaseHelper.insertVoyage(voyage.getNomVoyage(), voyage.getDateDepart(), voyage.getDateFin(), voyage.getImagePath());
 
                 if (result != -1) {
                     // Les données ont été insérées avec succès
@@ -153,6 +178,15 @@ public class CreerVoyageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CreerVoyageActivity.this, CreerVoyageActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageButton imageButtonEnregistrementsVoyage = findViewById(R.id.btn_enregistrements);
+        imageButtonEnregistrementsVoyage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CreerVoyageActivity.this, EnregistrementsVoyagesActivity.class);
                 startActivity(intent);
             }
         });

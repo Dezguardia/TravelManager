@@ -17,6 +17,24 @@
         android:theme="@style/Theme.TravelManager"
         tools:targetApi="31">
         <activity
+            android:name=".RoutingManager"
+            android:exported="false" />
+        <activity
+            android:name=".TravelActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AjouterJourActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ModifierVoyageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DetailsVoyageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EnregistrementsVoyagesActivity"
+            android:exported="false" />
+        <activity
             android:name=".CreerPlanVoyageActivity"
             android:exported="false" />
         <activity

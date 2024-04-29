@@ -38,6 +38,7 @@ android {
 dependencies {
 
     implementation("org.osmdroid:osmdroid-android:6.1.18")
+    implementation("com.squareup.picasso:picasso:2.71828")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
