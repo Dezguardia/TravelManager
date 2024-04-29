@@ -3,6 +3,7 @@
     <string name="search_title">Rechercher une destination</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="navigateButton">Aller vers la destination</string>
+     <string name="centerButton">Centrer</string>
     <string name="title_activity_creer_voyage">CreerVoyageActivity</string>
     <string name="creer_voyage">Créer un Nouveau Voyage</string>
     <string name="image">Image de couverture du voyage</string>
