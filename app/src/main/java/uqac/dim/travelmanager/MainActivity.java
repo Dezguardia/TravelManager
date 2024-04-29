@@ -72,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             } else if (itemId == R.id.navigation_favorites) {
-                //Intent intentFavorites = new Intent(MainActivity.this, FavoritesActivity.class);
-                //startActivity(intentFavorites);
+                Intent intent = new Intent(MainActivity.this, EnregistrementsVoyagesActivity.class);
+                startActivity(intent);
                 return true;
             } else if (itemId == R.id.navigation_options) {
                 //Intent intentOptions = new Intent(MainActivity.this, OptionsActivity.class);
@@ -99,15 +99,6 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 //TODO
                 return true;
-            }
-        });
-
-        ImageButton imageButtonEnregistrementsVoyage = findViewById(R.id.btn_enregistrements);
-        imageButtonEnregistrementsVoyage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, EnregistrementsVoyagesActivity.class);
-                startActivity(intent);
             }
         });
     }
