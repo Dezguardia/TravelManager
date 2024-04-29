@@ -132,14 +132,6 @@ public class CreerPlanVoyageActivity extends AppCompatActivity {
             // Si aucun des éléments ne correspond, renvoyez false
             return false;
         });
-        ImageButton imageButtonEnregistrementsVoyage = findViewById(R.id.btn_enregistrements);
-        imageButtonEnregistrementsVoyage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CreerPlanVoyageActivity.this, EnregistrementsVoyagesActivity.class);
-                startActivity(intent);
-            }
-        });
 
         btnNouveauJour = findViewById(R.id.nouveau_jour);
         btnJourPrecedant = findViewById(R.id.jour_precedant);
