@@ -198,14 +198,6 @@ public class CreerVoyageActivity extends AppCompatActivity {
             // Si aucun des éléments ne correspond, renvoyez false
             return false;
         });
-        ImageButton imageButtonEnregistrementsVoyage = findViewById(R.id.btn_enregistrements);
-        imageButtonEnregistrementsVoyage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CreerVoyageActivity.this, EnregistrementsVoyagesActivity.class);
-                startActivity(intent);
-            }
-        });
     }
     private void loadMapFragment() {
         MapFragment mapFragment = new MapFragment();
