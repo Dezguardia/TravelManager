@@ -10,6 +10,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentTransaction;
 
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class OptionsActivity extends AppCompatActivity {
@@ -17,7 +18,18 @@ public class OptionsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_travel);
+        setContentView(R.layout.activity_options);
+
+        OptionsFragment optionsFragment = new OptionsFragment();
+
+        // Utilisez FragmentTransaction pour ajouter ou remplacer le fragment
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Remplace le contenu du conteneur de l'activité (par exemple, R.id.fragment_container)
+        transaction.replace(R.id.fragment_container, optionsFragment);
+
+        // Commit la transaction
+        transaction.commit();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
@@ -50,6 +62,7 @@ public class OptionsActivity extends AppCompatActivity {
 
 
     }
+
 
     private void loadMapFragment() {
         MapFragment mapFragment = new MapFragment();
