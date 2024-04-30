@@ -65,7 +65,8 @@
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_navigation_menu"
         app:itemTextColor="@color/black"
-        app:itemIconTint="@color/jaune"/>
+        app:itemIconTint="@color/yellow_primary"/>
+
 
 </RelativeLayout>
 
