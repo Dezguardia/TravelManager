@@ -106,7 +106,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/plus"
-                    android:background="@color/transparent_color"
+                    android:background="@color/white"
                     android:layout_marginTop="16dp"
                     />
             </LinearLayout>
@@ -127,7 +127,7 @@
         android:layout_height="wrap_content"
         app:menu="@menu/bottom_navigation_menu"
         app:itemTextColor="@color/black"
-        app:itemIconTint="@color/jaune"
+        app:itemIconTint="@color/yellow_primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
