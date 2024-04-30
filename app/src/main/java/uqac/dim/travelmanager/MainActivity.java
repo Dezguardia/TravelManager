@@ -159,6 +159,16 @@ public class MainActivity extends AppCompatActivity {
         new FindLocationTask().execute(query);
     }
 
+    public void centerMap(View view) {
+        FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        mapFragment.centerOnLocation(location.getLatitude(), location.getLongitude());
+                    }
+                });
+    }
     public void goToLocation(View view) {
         FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         fusedLocationClient.getLastLocation()
